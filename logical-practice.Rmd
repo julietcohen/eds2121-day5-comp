@@ -1,0 +1,119 @@
+---
+title: "Logicals"
+author: "Juliet"
+date: "8/6/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+- if you write include = FALSE in the yaml, the whole chunk does not show up
+- if you include echo = FALSE, none of the code will show up in the knitted HTML but the output will
+- eval = FALSE tells R to not run that chuck
+
+
+## Taking a look at star wars
+
+```{r, echo = FALSE}
+
+#if you write include = FALSE in the yaml, the whole chunk does not show up
+#if you include echo = FALSE, none of the code will show up in the knitted HTML but the output will
+summary(starwars)
+head(starwars)
+tail(starwars)
+dim(starwars)
+```
+
+
+```{r, eval = FALSE}
+ggplot(data = starwars, aes(x = height, y = mass)) +
+  geom_point(aes(color = species))
+#use aes() here because species is based on a variable, if you are just requesting the points to be a color you dont use aes()
+#warning = FALSE in the yaml means that the warning R gives you does not show up in the knitted document
+```
+
+# calculations on a single column
+
+```{r}
+sw_height_mean_try1 <- mean(starwars$height)
+#returns NA because there are missing values and the mean function does not automatically remove NA values, this is a goof thing, makes you take a second look at your data
+sw_height_mean_try2 <- mean(starwars$height, na.rm = TRUE)
+sw_height_mean_try2
+
+#summary(starwars$height)
+
+#using similar naming system, find:
+#variance of character height (var())
+#std of height (sd))
+
+sw_charac_height_var <- var(starwars$height, na.rm = TRUE)
+sw_charac_height_var
+
+sw_charac_height_sd <- sd(starwars$height, na.rm = TRUE)
+sw_charac_height_sd
+```
+
+## Report stats in R rather than typing them put manually, which is prone to mistakes
+
+Mean character height is `r round(sw_height_mean_try2, 1)` cm, with a standard deviation of `r roudn(sw_charac_height_sd, 1)`
+
+## Logical Expressions
+```{r}
+5 < 10
+
+"cat" > "armadillo"
+#returns true because R works in alphabetical order with a being a lower value than c
+
+"cats" > "cat"
+#returns true because cats has a higher value since R uses the "assy" code to assign numebrs to letters
+
+"dog" == "dog"
+
+
+```
+
+```{r}
+10 <= 11
+
+5 >= 4
+
+3 <= 1
+
+10 == 11
+```
+
+
+```{r}
+tarantulas <- c(1, 3, 7, 10, 15)
+tarantulas > 5
+
+
+```
+
+# logical operators
+
+- `!`
+- `&` (and statement)
+- `|` (or statement)
+
+```{r}
+3 < 1 | 8 > 2
+
+6 < 10 & 5 < 1
+
+7 != 11
+#7 is not equal to 11
+
+4 != 4 | 2 < 5 | 6 > 10
+
+0 == FALSE
+1 == TRUE
+#if you have a binary variable stored as 0's and 1's, R will automatically treat them as false or true respectively 
+```
+
+
+
+
